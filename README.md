@@ -2,12 +2,12 @@
 简单的运维管理后台，python2.7-tornado3
 
 #依赖
-基于python2.7
-基于tornado
-基于bootstrap的AdminX界面模板
-使用了paramiko，需要安装
-使用了celery，需要安装
-使用了redis，需要安装
+基于python2.7    
+基于tornado    
+基于bootstrap的AdminX界面模板    
+使用了paramiko，需要安装    
+使用了celery，需要安装    
+使用了redis，需要安装    
 使用了mysql，需要安装，需要建库建表
 
 # 功能说明
