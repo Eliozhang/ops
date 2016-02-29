@@ -5,6 +5,7 @@
 基于python2.7    
 基于tornado    
 基于bootstrap的AdminX界面模板    
+基于`saltstack`
 使用了paramiko，需要安装    
 使用了celery，需要安装    
 使用了redis，需要安装    
@@ -127,6 +128,7 @@ pip2.7 install redis
 ```
 create database ops default character set utf8;
 grant all privileges on ops.* to ops@'localhost' identified by'ops';
+
 use ops
 
 create table task(
@@ -169,11 +171,53 @@ celery -A tasks worker -c 10 --loglevel=info
 ```
 nohup celery -A tasks worker -c 10 --loglevel=info &
 ```
+###安装saltstack服务端
+```
+rpm -ivh http://mirrors.sohu.com/fedora-epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum  -y install salt-master
+
+cat>/etc/salt/master<<EOF
+publish_port: 11438     
+user: root                     
+worker_threads: 1               
+ret_port: 11439                
+keep_jobs: 48                  
+timeout: 60                     
+auto_accept: False
+EOF
+```
+
+###防火墙放行端口
+有防火墙的话需要放行端口
+```
+-A RH-Firewall-1-INPUT  -p tcp -m state --state NEW -m tcp --dport 11438:11439 -j ACCEPT
+```
+
+###saltstack客户端安装举例
+```
+yum  -y install salt-minion
+cat >/etc/salt/minion<<EOF
+master: 192.168.246.128   #服务端的ip，需要修改    
+id: C1-192.168.246.129     #本机的ID，需要修改，唯一     
+master_port: 11439         
+EOF
+```
 
 ##启动ops.py
+```
 python2.7 ops.py
-
+```
 会监听8000端口，可以自行修改。
+
+##登陆账号
+admin/admin
+
+##扫描节点机器到后台
+在saltstack端添加到服务端之后，需要在后台web端扫描入库到mysql。
+功能见首页的 “Tools”--“扫描新机器”。
+
+##使用
+上面都走通之后，就可以使用做管理了。
 
 #界面
 ![image1](https://github.com/cnkedao/ops/raw/master/1/1.jpg)
