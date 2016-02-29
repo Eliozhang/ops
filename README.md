@@ -5,8 +5,7 @@
 基于python2.7    
 基于tornado    
 基于bootstrap的AdminX界面模板    
-基于`saltstack`    
-使用了paramiko，需要安装    
+基于`saltstack`      
 使用了celery，需要安装    
 使用了redis，需要安装    
 使用了mysql，需要安装，需要建库建表
@@ -41,20 +40,6 @@ wget http://demo.acache.cn/pip-7.1.0.tar.gz
 tar xvf pip-7.1.0.tar.gz
 cd pip-7.1.0
 python2.7 setup.py install
-```
-
-###安装Paramiko模块
-```
-yum -y install python-devel
-wget http://ftp.dlitz.net/pub/dlitz/crypto/pycrypto/pycrypto-2.6.tar.gz
-tar -zxvf pycrypto-2.6.tar.gz
-cd pycrypto-2.6/
-python2.7 setup.py build && python2.7 setup.py install
-cd ..
-wget http://www.lag.net/paramiko/download/paramiko-1.7.7.1.tar.gz
-tar xvzf paramiko-1.7.7.1.tar.gz
-cd paramiko-1.7.7.1/
-python2.7 setup.py build && python2.7 setup.py install
 ```
 
 ###安装redis
@@ -167,6 +152,7 @@ create table host_devs(
 ```
 celery -A tasks worker -c 10 --loglevel=info
 ```
+上面是调试模式，可以看到报错信息
 跑到后台模式
 ```
 nohup celery -A tasks worker -c 10 --loglevel=info &
@@ -218,6 +204,10 @@ admin/admin
 
 ##使用
 上面都走通之后，就可以使用做管理了。
+
+#工作流程
+
+基于saltstack扫描机器存mysql——添加任务（命令/文件）——把任务丢到celery——celery用redis做队列存储——celery的tasks.py里面实现做任务action——tasks.py把任务做完反馈到mysql——前端到mysql取这次任务的结果做展示
 
 #界面
 ![image1](https://github.com/cnkedao/ops/raw/master/1/1.jpg)
