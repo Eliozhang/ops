@@ -1,5 +1,5 @@
 # ops
-简单的运维管理后台，python2.7-tornado3
+简单的运维管理后台，python2.7 - tornado3 - saltstack - celery
 ![image3](https://github.com/cnkedao/ops/raw/master/1/3.jpg)
 #依赖
 基于python2.7    
