@@ -5,7 +5,7 @@
 基于python2.7    
 基于tornado    
 基于bootstrap的AdminX界面模板    
-基于`saltstack`
+基于`saltstack`    
 使用了paramiko，需要安装    
 使用了celery，需要安装    
 使用了redis，需要安装    
